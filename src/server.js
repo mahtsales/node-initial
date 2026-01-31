@@ -2,9 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import { prisma } from "./db/prisma.js";
 
+import healthRoutes from "./routes/health.routes.js"
+
 const app = express();
 dotenv.config();
 app.use(express.json());
+
+app.use(healthRoutes);
 
 const port = Number(process.env.PORT);
 
