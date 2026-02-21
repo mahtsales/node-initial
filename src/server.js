@@ -47,6 +47,26 @@ app.get("/users/:id", async (req, res) =>{
     }
     res.json(user)
 })
+app.put("/users/:id", async (req, res)=>{
+    try{
+        const id = Number (req.params.id);
+        const {name, email} = req.body;
+
+        if (!name || !email){
+            return res.status(400).json({error: "informe um name ou email para atualizar"});
+        }
+        const user = await prisma.user.update({
+            where: {id},
+            data: {name, email},
+        });
+
+        return res.status(200).json(user);
+    }catch (err){
+        return res.status(400).json({error: "não foi possível atualizar o usuário", 
+            details: String(err.message || err)});
+    }
+
+})
 
 
 // ultima coisa do arquivo por enquanto
