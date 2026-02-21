@@ -32,8 +32,6 @@ app.post("/users", async (req, res)=>{
 
 })
 app.get("/users", async (req, res) =>{
-    const id = Number (req.params.id);
-
     const users = await prisma.user.findMany({
         orderBy: {id: "desc"}
     });
@@ -41,8 +39,7 @@ app.get("/users", async (req, res) =>{
 })
 app.get("/users/:id", async (req, res) =>{
     const id = Number (req.params.id);
-
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
         where: {id},
     })
     if (!user){
